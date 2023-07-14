@@ -39,6 +39,7 @@ services:
       fastapi: fastapi
       SMTP_GMAIL_EMAIL_SENDER: ''
       SMTP_GMAIL_PASSWORD: ''
+      SMTP_GMAIL_EMAIL_RECIEVER: ''
 
 
 volumes:
