@@ -1,0 +1,6 @@
+selenium
+python-dotenv
+mysql-connector-python
+fastapi
+uvicorn
+pydantic 

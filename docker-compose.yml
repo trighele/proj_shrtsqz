@@ -1,0 +1,45 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: ''
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    ports:
+      - 3306:3306
+  fastapi:
+    build:
+      context: ./api
+      dockerfile: DockerFile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api:/app
+    depends_on: 
+      - mysql
+    environment:
+      MYSQL_HOST: ''
+      MYSQL_USER: ''
+      MYSQL_PASSWORD: ''
+      MYSQL_DATABASE: ''
+      MYSQL_TABLE: ''
+  scheduler:
+    build:
+      context: ./scheduler
+      dockerfile: DockerFile
+    depends_on:
+      - fastapi
+      - mysql
+    environment:
+      fastapi: fastapi
+      SMTP_GMAIL_EMAIL_SENDER: ''
+      SMTP_GMAIL_PASSWORD: ''
+
+
+volumes:
+  db-data:      
