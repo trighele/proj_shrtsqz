@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install Firefox and GeckoDriver
 RUN apt-get update && apt-get install -y firefox-esr
-RUN wget -O /usr/bin/geckodriver https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
+RUN wget -O /usr/bin/geckodriver https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux-aarch64.tar.gz
 RUN tar -xvzf /usr/bin/geckodriver -C /usr/bin/
 RUN chmod +x /usr/bin/geckodriver
 
