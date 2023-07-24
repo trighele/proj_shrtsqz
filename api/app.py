@@ -6,8 +6,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options as ChromeOptions
+# from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -36,15 +36,17 @@ class Data(BaseModel):
 @app.get("/api/stock-results")
 def get_stock_results():
 
-    chrome_options = ChromeOptions()
-    chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_prefs = {}
-    chrome_options.experimental_options["prefs"] = chrome_prefs
-    chrome_prefs["profile.default_content_settings"] = {"images": 2}
+    # chrome_options = ChromeOptions()
+    options = Options()
+    # chrome_options.add_argument("--headless=new")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_prefs = {}
+    # chrome_options.experimental_options["prefs"] = chrome_prefs
+    # chrome_prefs["profile.default_content_settings"] = {"images": 2}
+    options.headless = True
 
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Firefox(options=options)
 
     driver.get('https://finviz.com/screener.ashx?v=152&f=sh_short_high,ta_highlow50d_b0to10h&ft=3&o=-shortinterestratio&c=1,2,3,4,25,30,31,55,57,60,81,65')
 

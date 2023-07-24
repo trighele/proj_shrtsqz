@@ -3,10 +3,19 @@ FROM python:3.9
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y wget gnupg2
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-RUN apt-get update && apt-get install -y google-chrome-stable
+# RUN apt-get update && apt-get install -y wget gnupg2
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+# RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+# RUN apt-get update && apt-get install -y google-chrome-stable
+
+# Install Firefox and GeckoDriver
+RUN apt-get update && apt-get install -y firefox-esr
+RUN wget -O /usr/bin/geckodriver https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz
+RUN tar -xvzf /usr/bin/geckodriver -C /usr/bin/
+RUN chmod +x /usr/bin/geckodriver
+
+# Set environment variable for Firefox
+ENV MOZ_HEADLESS=1
 
 COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
